@@ -9,8 +9,6 @@ public class WeaponBase : MonoBehaviour
     [SerializeField]
     protected int m_pierce;
 
-
-
     protected virtual void OnCollisionEnter(Collision collision)
     {
         m_pierce--;
