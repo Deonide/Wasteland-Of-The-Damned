@@ -1,13 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     //<-- Movement -->
-    [SerializeField]
-    protected float m_movementSpeed = 5;
+    public float m_movementSpeed = 5;
+    private float m_maxSpeed = 5;
+    private float m_debuffTimer = 2;
 
     private Vector2 m_movementInput;
+
     //<- End Movement ->
 
     //<-- Pointer -->
@@ -28,13 +31,19 @@ public class Player : MonoBehaviour
     Rigidbody m_rb;
 
     public int m_currentHealth;
-    private int m_maxHealth = 80;
+    private int m_maxHealth = 40;
+    private int m_playerLevel;
+    private int m_expNeededToLevelUp;
+
+
     [SerializeField]
     public weaponUsed m_weaponUsed;
 
     void Start()
     {
 /*        Cursor.lockState = CursorLockMode.Locked;*/
+        m_playerLevel = 0;
+        m_expNeededToLevelUp = 50;
         m_currentHealth = m_maxHealth;
         m_rb = gameObject.GetComponent<Rigidbody>();
         MainCamera = Camera.main;
@@ -44,16 +53,45 @@ public class Player : MonoBehaviour
     {
         m_movementInput = ctx.ReadValue<Vector2>();
     }
+
     public void OnWeaponSwitch(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
-            m_weaponUsed += 1;
-            Debug.Log(m_weaponUsed);
-            if (m_weaponUsed > weaponUsed.Arrow)
+            if(m_weaponUsed == weaponUsed.Dagger)
             {
-                m_weaponUsed = 0;
+                if (PlayerStats.Instance.m_AOEAttackUnlocked)
+                {
+                    m_weaponUsed = weaponUsed.AOE;
+                }
+                else if (PlayerStats.Instance.m_arrowUnlocked)
+                {
+                    m_weaponUsed = weaponUsed.Arrow;
+                }
             }
+            else if(m_weaponUsed == weaponUsed.AOE)
+            {
+                if (PlayerStats.Instance.m_arrowUnlocked)
+                {
+                    m_weaponUsed = weaponUsed.Arrow;
+                }
+            }
+            else
+            {
+                m_weaponUsed = weaponUsed.Dagger;
+            }
+
+            Debug.Log(m_weaponUsed);
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            Time.timeScale = 0f;
+            GameManager.Instance.m_pauseScreen.SetActive(true);
+
         }
     }
 
@@ -65,6 +103,16 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         m_rb.linearVelocity = new Vector3(m_movementInput.x * m_movementSpeed, 0, m_movementInput.y * m_movementSpeed);
+
+        if(m_movementSpeed < m_maxSpeed)
+        {
+            m_debuffTimer -= Time.deltaTime;
+            if(m_debuffTimer <= 0)
+            {
+                m_movementSpeed = m_maxSpeed;
+                m_debuffTimer = 2;
+            }
+        }
     }
 
     protected virtual void OnCollisionEnter(Collision col)
@@ -72,6 +120,11 @@ public class Player : MonoBehaviour
         if (col.gameObject.CompareTag("Enemy"))
         {
             m_currentHealth -= col.gameObject.GetComponent<EnemyBase>().m_damage;
+
+            if (m_currentHealth <= 0)
+            {
+                SceneManager.LoadScene("Death Screen");
+            }
         }
     }
 
