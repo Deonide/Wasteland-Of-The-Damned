@@ -13,7 +13,8 @@ public class EnemySpawner : MonoBehaviour
     private int m_spawningDistance = 5;
 
     [SerializeField]
-    private int m_minimumRange;
+    private int m_minimumRange, m_amountOfEnemies, m_wave, m_groups;
+ 
     private int m_minMax = 5;
     private int m_enemyToSpawn;
 
@@ -32,19 +33,25 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            m_Randompos = Random.onUnitSphere * m_spawningDistance;
-            m_spawnPos = m_Player.transform.position;
-            m_spawnPos.x += m_Randompos.x;
-            m_spawnPos.z += m_Randompos.z;
-            Debug.Log(m_Randompos);
-
-            if(Vector3.Distance(m_Player.transform.position, m_spawnPos) < m_minimumRange)
+            for (int i = 0; i < m_amountOfEnemies; i++)
             {
-                continue;
+
+                m_Randompos = Random.onUnitSphere * m_spawningDistance;
+                m_spawnPos = m_Player.transform.position;
+                m_spawnPos.x += m_Randompos.x;
+                m_spawnPos.z += m_Randompos.z;
+                Debug.Log(m_Randompos);
+
+                if (Vector3.Distance(m_Player.transform.position, m_spawnPos) < m_minimumRange)
+                {
+                    continue;
+                }
+                m_enemyToSpawn = Random.Range(0, m_enemyPrefabs.Length);
+                Instantiate(m_enemyPrefabs[m_enemyToSpawn], m_spawnPos, Quaternion.identity);
+                i++;
+                yield return new WaitForSeconds(m_spawningTime);
             }
-            m_enemyToSpawn = Random.Range(0, m_enemyPrefabs.Length);
-            Instantiate(m_enemyPrefabs[m_enemyToSpawn], m_spawnPos, Quaternion.identity);
-            yield return new WaitForSeconds(m_spawningTime);
+           
         }
     }
 
