@@ -21,15 +21,15 @@ TagManager:
   - EnemyParent
   - Obstacle
   - PlayerWeapon
+  - Pick Up
   - 
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - SkullRenderLayer
+  - HeartRenderLayer
   - 
   - 
   - 
