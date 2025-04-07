@@ -3,7 +3,7 @@ using System.Collections;
 using static UnityEngine.GraphicsBuffer;
 
 
-public class MaggothornCoroutine : MonoBehaviour
+public class RangedAttackHandler : MonoBehaviour
 {
     [SerializeField]
     private GameObject m_thorn, m_weaponSpawnPoint;

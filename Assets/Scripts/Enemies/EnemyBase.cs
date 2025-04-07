@@ -5,30 +5,39 @@ using UnityEngine.AI;
 public class EnemyBase : MonoBehaviour
 {
     [SerializeField]
-    protected Player m_playerPos;
-    [SerializeField]
     private GameObject[] m_PickUpS;
     [SerializeField]
     private NavMeshAgent m_agent;
+    [SerializeField]
+    private int m_experiencePoints;
 
-    
-    
     private int m_soulsToDrop;
     public int m_damage;
     public int m_health;
 
+    public Player m_playerPos;
 
     protected virtual void Start()
     {
-        PlayerStats.Instance.m_soulsToDrop = PlayerStats.Instance.m_amountOfSoulsLevel;
-        m_soulsToDrop = PlayerStats.Instance.m_soulsToDrop;
+
+        m_soulsToDrop = PlayerStatsManager.Instance.m_soulsToDrop;
         m_agent = GetComponent<NavMeshAgent>();
         m_playerPos = FindFirstObjectByType<Player>();
     }
 
     protected virtual void FixedUpdate()
     {
-        if(m_playerPos != null)
+        HandleCurrentState();
+    }
+
+    protected virtual void HandleCurrentState()
+    {
+        MoveToPlayer();
+    }
+
+    protected virtual void MoveToPlayer()
+    {
+        if (m_playerPos != null)
         {
             m_agent.destination = m_playerPos.transform.position;
         }
@@ -52,22 +61,24 @@ public class EnemyBase : MonoBehaviour
     {
         if (m_health <= 0)
         {
-            PlayerStats.Instance.m_Souls += m_soulsToDrop;
-            switch (PlayerStats.Instance.m_amountOfPickUpsLevel)
+            PlayerStatsManager.Instance.Souls += m_soulsToDrop;
+            switch (PlayerStatsManager.Instance.AmountOfPickUpsLevel)
             {
                 case 0:
                     int randomPickUpLevel0 = Random.Range(0, 101);
                     if (randomPickUpLevel0 <= 25)
                     {
-                        Instantiate(m_PickUpS[0], transform.position, Quaternion.identity);
+                        GameObject ExpPickUp = Instantiate(m_PickUpS[0], transform.position, Quaternion.identity);
+                        ExpPickUp.GetComponent<ExpPickUp>().m_expGained = m_experiencePoints;
+                        
                     }
-                    else if (randomPickUpLevel0 <= 37)
+                    else if (randomPickUpLevel0 >= 26 && randomPickUpLevel0 <= 37)
                     {
                         Instantiate(m_PickUpS[1], transform.position, Quaternion.identity);
                     }
-                    else if (randomPickUpLevel0 <= 50)
+                    else if (randomPickUpLevel0 >= 38 && randomPickUpLevel0 <= 50)
                     {
-                        Instantiate(m_PickUpS[2], transform.position, Quaternion.identity);
+                       Instantiate(m_PickUpS[2], transform.position, Quaternion.identity);
                     }
                     break;
                 case 1:
