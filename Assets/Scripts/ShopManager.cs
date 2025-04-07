@@ -38,57 +38,57 @@ public class ShopManager : MonoBehaviour
     #region Upgrade/Unlock Functions
     public void UpgradePickUpLevel()
     {
-        if (PlayerStats.Instance.m_Souls >= m_PickUpsUpgradeCost)
+        if (PlayerStatsManager.Instance.Souls >= m_PickUpsUpgradeCost)
         {
-            PlayerStats.Instance.m_Souls -= m_PickUpsUpgradeCost;
-            PlayerStats.Instance.m_amountOfPickUpsLevel++;
+            PlayerStatsManager.Instance.Souls -= m_PickUpsUpgradeCost;
+            PlayerStatsManager.Instance.AmountOfPickUpsLevel++;
             UpdateCosts();
         }
     }
 
     public void UpgradeHealthLevel()
     {
-        if (PlayerStats.Instance.m_Souls >= m_healthUpgradeCost)
+        if (PlayerStatsManager.Instance.Souls >= m_healthUpgradeCost)
         {
-            PlayerStats.Instance.m_Souls -= m_healthUpgradeCost;
-            PlayerStats.Instance.m_healthLevel++;
+            PlayerStatsManager.Instance.Souls -= m_healthUpgradeCost;
+            PlayerStatsManager.Instance.HealthLevel++;
             UpdateCosts();
         }
     }
 
     public void UpgradeAmountOfSoulsLevel()
     {
-        if (PlayerStats.Instance.m_Souls >= m_amountOfSoulsUpgradeCost)
+        if (PlayerStatsManager.Instance.Souls >= m_amountOfSoulsUpgradeCost)
         {
-            PlayerStats.Instance.m_Souls -= m_amountOfSoulsUpgradeCost;
-            PlayerStats.Instance.m_amountOfSoulsLevel++;
+            PlayerStatsManager.Instance.Souls -= m_amountOfSoulsUpgradeCost;
+            PlayerStatsManager.Instance.AmountOfSoulsLevel++;
             UpdateCosts();
         }
     }
 
     public void UnlockAOEAttack()
     {
-        if(PlayerStats.Instance.m_Souls >= m_unlockAOECost)
+        if(PlayerStatsManager.Instance.Souls >= m_unlockAOECost)
         {
-            PlayerStats.Instance.m_Souls -= m_unlockAOECost;
-            PlayerStats.Instance.m_AOEAttackUnlocked = true;
+            PlayerStatsManager.Instance.Souls -= m_unlockAOECost;
+            PlayerStatsManager.Instance.AOEAttackUnlocked = true;
             UpdateCosts();
         }
     }
 
     public void UnlockArrow()
     {
-        if (PlayerStats.Instance.m_Souls >= m_unlockArrowCost)
+        if (PlayerStatsManager.Instance.Souls >= m_unlockArrowCost)
         {
-            PlayerStats.Instance.m_Souls -= m_unlockArrowCost;
-            PlayerStats.Instance.m_arrowUnlocked = true;
+            PlayerStatsManager.Instance.Souls -= m_unlockArrowCost;
+            PlayerStatsManager.Instance.ArrowUnlocked = true;
             UpdateCosts();
         }
     }
 
     private void UpdateCosts()
     {
-        switch (PlayerStats.Instance.m_amountOfPickUpsLevel)
+        switch (PlayerStatsManager.Instance.AmountOfPickUpsLevel)
         {
             case 0:
                 m_PickUpsUpgradeCost = 250;
@@ -101,7 +101,7 @@ public class ShopManager : MonoBehaviour
                 break;
         }
 
-        switch (PlayerStats.Instance.m_healthLevel)
+        switch (PlayerStatsManager.Instance.HealthLevel)
         {
             case 0:
                 m_healthUpgradeCost = 250;
@@ -114,7 +114,7 @@ public class ShopManager : MonoBehaviour
                 break;
         }
 
-        switch (PlayerStats.Instance.m_amountOfSoulsLevel)
+        switch (PlayerStatsManager.Instance.AmountOfSoulsLevel)
         {
             case 0:
                 m_amountOfSoulsUpgradeCost = 250;
@@ -127,12 +127,12 @@ public class ShopManager : MonoBehaviour
                 break;
         }
 
-        if (PlayerStats.Instance.m_AOEAttackUnlocked)
+        if (PlayerStatsManager.Instance.AOEAttackUnlocked)
         {
             m_AOEButton.SetActive(false);
         }
 
-        if (PlayerStats.Instance.m_arrowUnlocked)
+        if (PlayerStatsManager.Instance.ArrowUnlocked)
         {
             m_arrowButton.SetActive(false);
         }
@@ -146,7 +146,12 @@ public class ShopManager : MonoBehaviour
         m_pickUpText.text = m_PickUpsUpgradeCost.ToString();
         m_healthText.text = m_healthUpgradeCost.ToString();
         m_soulsUpgradeText.text = m_amountOfSoulsUpgradeCost.ToString();
-        m_soulsText.text = "Souls " + PlayerStats.Instance.m_Souls.ToString();
+        m_soulsText.text = "Souls " + PlayerStatsManager.Instance.Souls.ToString();
+    }
+
+    public void SaveStats()
+    {
+        PlayerStatsManager.Instance.Save();
     }
     #endregion
 }

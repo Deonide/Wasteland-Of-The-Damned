@@ -7,7 +7,7 @@ public class WeaponBase : MonoBehaviour
     public int m_damage; 
      
     [SerializeField]
-    protected int m_pierce;
+    protected int m_pierce = 1;
 
     protected virtual void OnCollisionEnter(Collision collision)
     {

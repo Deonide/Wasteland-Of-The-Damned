@@ -23,7 +23,7 @@ public class WeaponSpawner : MonoBehaviour
     private void Start()
     {
         //At the start of the game, set the attackTimer to the right cooldown.
-        PlayerStats.Instance.m_attackTimer = m_maxAttackTimer;
+        PlayerStatsManager.Instance.m_attackTimer = m_maxAttackTimer;
         m_player = FindFirstObjectByType<Player>();
         StartCoroutine(Attack());
     }
@@ -32,7 +32,7 @@ public class WeaponSpawner : MonoBehaviour
     {
         while (true)
         {
-            PlayerStats.Instance.m_attackTimer = m_maxAttackTimer;
+            PlayerStatsManager.Instance.m_attackTimer = m_maxAttackTimer;
 
             switch (m_player.m_weaponUsed)
             {
@@ -60,7 +60,7 @@ public class WeaponSpawner : MonoBehaviour
                 GameObject spawnedWeapon = Instantiate(m_weaponPrefab, transform.position, Quaternion.Euler(0, m_player.transform.rotation.eulerAngles.y, 0));
             }
 
-            yield return new WaitForSeconds(PlayerStats.Instance.m_attackTimer);
+            yield return new WaitForSeconds(PlayerStatsManager.Instance.m_attackTimer);
         }
     }
 }

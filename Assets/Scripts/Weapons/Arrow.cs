@@ -6,6 +6,8 @@ public class Arrow : WeaponBase
 
     protected void Start()
     {
+        m_damage = PlayerStatsManager.Instance.m_arrowDamage;
+        m_pierce = PlayerStatsManager.Instance.m_arrowPierce;
         m_rb = GetComponent<Rigidbody>();
     }
 
