@@ -7,10 +7,11 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     private GameObject[] m_PickUpS;
     [SerializeField]
-    private NavMeshAgent m_agent;
+    protected NavMeshAgent m_agent;
     [SerializeField]
     private int m_experiencePoints;
 
+    public int m_wave;
     private int m_soulsToDrop;
     public int m_damage;
     public int m_health;
@@ -19,7 +20,8 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void Start()
     {
-
+        m_health = m_health * m_wave;
+        m_experiencePoints = m_experiencePoints * m_wave;
         m_soulsToDrop = PlayerStatsManager.Instance.m_soulsToDrop;
         m_agent = GetComponent<NavMeshAgent>();
         m_playerPos = FindFirstObjectByType<Player>();
@@ -35,6 +37,7 @@ public class EnemyBase : MonoBehaviour
         MoveToPlayer();
     }
 
+    //Sets the destination of the nav mesh
     protected virtual void MoveToPlayer()
     {
         if (m_playerPos != null)
@@ -59,6 +62,7 @@ public class EnemyBase : MonoBehaviour
 
     private void OnDestroy()
     {
+        //Gives a random number to choose which pick up needs to drop (using drop chances)
         if (m_health <= 0)
         {
             PlayerStatsManager.Instance.Souls += m_soulsToDrop;
