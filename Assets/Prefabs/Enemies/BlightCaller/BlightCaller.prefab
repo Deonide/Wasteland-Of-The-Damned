@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4697636776712485599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8891311051685654306}
+  - component: {fileID: 8751798699071159239}
+  - component: {fileID: 4729976502737076493}
+  m_Layer: 0
+  m_Name: BlightCaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8891311051685654306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697636776712485599}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.41, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8525377341693890036}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8751798699071159239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697636776712485599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c17cbb0053103c47b0fc1a9f2742dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PickUpS: []
+  m_agent: {fileID: 0}
+  m_experiencePoints: 10
+  m_wave: 0
+  m_damage: 0
+  m_health: 5
+  m_playerPos: {fileID: 0}
+  m_range: 5
+  m_centrePoint: {fileID: 8891311051685654306}
+  m_toxicWaste: {fileID: 1485189604130409741, guid: cd48470d2fee3344595df3cd6196a65d, type: 3}
+  m_toxicWasteList: []
+--- !u!95 &4729976502737076493
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697636776712485599}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+  m_Controller: {fileID: 9100000, guid: 4d62b78371f70e44f920e62bf3be87cf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Armature'\n\tTransform 'Shoulder.R'\n\tTransform
+    'Foot.R'\n\tTransform 'Upper-Arm.L'\n\tTransform 'Wrist.L'\n\tTransform 'Wrist.R'\n\tTransform
+    'Lower-Leg.R'\n\tTransform 'Lower-Chest'\n\tTransform 'Upper-Leg.L'\n\tTransform
+    'Foot.L'\n\tand more ...\n\tFrom animation clip 'mixamo.com'"
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &8204011476624173599
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8891311051685654306}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: m_Name
+      value: Start zolmbie rig BlightCaller
+      objectReference: {fileID: 0}
+    - target: {fileID: 5831280665362760304, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5545c89bb0a75004bbe217d139a97e89, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: -8700617353114198275, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+    - {fileID: 65702495048144492, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+--- !u!4 &8525377341693890036 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a0e5ffc76e34b42408be9b9f344a540c, type: 3}
+  m_PrefabInstance: {fileID: 8204011476624173599}
+  m_PrefabAsset: {fileID: 0}
