@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     
     private float m_debuffTimer = 2;
     public bool m_rooted;
+    //Direction Check
+    private float x, y;
 
     private Vector2 m_movementInput;
     //<- End Movement ->
@@ -46,9 +48,12 @@ public class Player : MonoBehaviour
     
     private int m_startHealth = 40;
     private int m_maxHealth = 40;
+
+    public float m_healthLossTimer;
     //<- End Health ->
 
     //<-- Level Up System -->
+    //Array of possible upgrades
     Upgrade[] m_upgrades = new Upgrade[]
     {
         new Upgrade { Name = "Arrow Pierce", Description = "Arrow Pierces X more enemies", Increase = 1 },
@@ -69,28 +74,40 @@ public class Player : MonoBehaviour
     public int m_expNeededToLevelUp;
     public int m_currentExp;
     //<- End Level Up System ->
+
+    [SerializeField]
+    private Animator m_anim;
+
+    [SerializeField]
+    private GameObject[] m_usedWeapon;
+
     #endregion
 
     void Start()
     {
-/*        Cursor.lockState = CursorLockMode.Locked;*/
         m_expNeededToLevelUp = 50;
         m_currentHealth = m_startHealth;
         m_rb = gameObject.GetComponent<Rigidbody>();
         MainCamera = Camera.main;
+        UIManager.Instance.UpdateExpValues(m_expNeededToLevelUp);
+        WeaponChange();
     }
 
     #region Inputs
     public void OnMove(InputAction.CallbackContext ctx)
     {
+        //Checks which way the player needs to move through the input of the player.
         m_movementInput = ctx.ReadValue<Vector2>();
+        x = m_movementInput.x;
+        y = m_movementInput.y;
     }
 
     public void OnWeaponSwitch(InputAction.CallbackContext ctx)
     {
+        //Switches the enum weaponUsed.
         if (ctx.performed)
         {
-            if(m_weaponUsed == weaponUsed.Dagger)
+            if (m_weaponUsed == weaponUsed.Dagger)
             {
                 if (PlayerStatsManager.Instance.AOEAttackUnlocked)
                 {
@@ -101,7 +118,7 @@ public class Player : MonoBehaviour
                     m_weaponUsed = weaponUsed.Arrow;
                 }
             }
-            else if(m_weaponUsed == weaponUsed.AOE)
+            else if (m_weaponUsed == weaponUsed.AOE)
             {
                 if (PlayerStatsManager.Instance.ArrowUnlocked)
                 {
@@ -112,8 +129,32 @@ public class Player : MonoBehaviour
             {
                 m_weaponUsed = weaponUsed.Dagger;
             }
-
             Debug.Log(m_weaponUsed);
+            WeaponChange();
+        }
+    }
+
+    private void WeaponChange()
+    {
+        //Checks which weapon the player needs to be holding.
+        if (m_weaponUsed == weaponUsed.Dagger)
+        {
+            m_usedWeapon[0].SetActive(true);
+            m_usedWeapon[1].SetActive(false);
+            m_usedWeapon[2].SetActive(false);
+        }
+        else if (m_weaponUsed == weaponUsed.AOE)
+        {
+            m_usedWeapon[0].SetActive(false);
+            m_usedWeapon[1].SetActive(true);
+            m_usedWeapon[2].SetActive(false);
+
+        }
+        else
+        {
+            m_usedWeapon[0].SetActive(false);
+            m_usedWeapon[1].SetActive(false);
+            m_usedWeapon[2].SetActive(true);
         }
     }
 
@@ -126,9 +167,13 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+
     private void Update()
     {
+        //Makes sure that the character is always looking at the cursor.
         Aim();
+
+        //If the player has enough exp they level up.
         if(m_currentExp >= m_expNeededToLevelUp)
         {
             LevelUpStats();
@@ -138,43 +183,53 @@ public class Player : MonoBehaviour
     #region Level Up System
     private void LevelUpStats()
     {
+        //The amount of exp get taken off the current exp.
         m_currentExp -= m_expNeededToLevelUp;
         m_expNeededToLevelUp = Mathf.RoundToInt(m_expNeededToLevelUp * 1.5f);
         GameManager.Instance.m_levelUpScreen.SetActive(true);
+        UIManager.Instance.UpdateExpValues(m_expNeededToLevelUp);
         SetButtons();
     }
 
     //https://www.youtube.com/watch?v=GvWFXHZ7V7E
     public void SetButtons()
     {
+        //Goes through the list of possible upgrades and turns them into ints.
         List<int> availableUpgrades = new List<int>();
         for (int i = 0; i < m_upgrades.Length; i++)
         {
             availableUpgrades.Add(i);
         }
 
+        //Shuffles the list of possible upgrades.
         ShuffleList(availableUpgrades);
 
+        //Makes sure that an upgrade doesnt gets used twice.
         Upgrade[] usedUpgrades = new Upgrade[3];
         for (int upgrades = 0; upgrades < m_upgradeButtons.Length; upgrades++)
         {
             usedUpgrades[upgrades] = m_upgrades[availableUpgrades[upgrades]];
         }
 
+        //Gives the right name to te corresponding button.
         for (int buttonText = 0; buttonText < m_upgradeButtons.Length; buttonText++)
         {
             m_upgradeButtons[buttonText].GetComponentInChildren<TMP_Text>().text = usedUpgrades[buttonText].Name;
         }
 
+        //Updates the description text.
         for (int descriptionText = 0; descriptionText < m_upgradeText.Length; descriptionText++)
         {
             m_upgradeText[descriptionText].text = usedUpgrades[descriptionText].Description.Replace("X", usedUpgrades[descriptionText].Increase.ToString());
         }
+
+        //To make sure the player doesnt get attacked while choosing an upgrade.
         Time.timeScale = 0;
     }
 
     public void ChosenUpgrade(string chosenUpgrade)
     {
+        //Effects of the upgrades.
         switch (chosenUpgrade)
         {
             case "Arrow Pierce":
@@ -203,12 +258,15 @@ public class Player : MonoBehaviour
                 PlayerStatsManager.Instance.m_attackTimer -= 0.25f;
                 break;
         }
+
+        //Makes the player heal to full hp when they level up.
         m_currentHealth = m_maxHealth;
     }
 
     // SHUFFLE LIST
     public void ShuffleList(List<int> list)
     {
+        //Shuffles a list of numbers to a random order
         for (int i = 0; i < list.Count; i++)
         {
             int randomIndex = Random.Range(i, list.Count);
@@ -220,6 +278,7 @@ public class Player : MonoBehaviour
 
     public class Upgrade
     {
+        //When a new upgrade is made it needs to have the following values
         public string Name { get; set; }
         public string Description { get; set; }
         public float Increase { get; set; }
@@ -230,11 +289,15 @@ public class Player : MonoBehaviour
     {
         m_rb.linearVelocity = new Vector3(m_movementInput.x * m_movementSpeed, 0, m_movementInput.y * m_movementSpeed);
 
+        m_anim.SetFloat("X-Coordinat", x);
+        m_anim.SetFloat("Y-Coordinat", y);
+
+
         if (m_rooted)
         {
             m_movementSpeed = 0;
         }
-
+       
         if(m_movementSpeed < m_maxSpeed)
         {
             m_debuffTimer -= Time.deltaTime;
@@ -252,10 +315,12 @@ public class Player : MonoBehaviour
         if (col.gameObject.CompareTag("Enemy"))
         {
             m_currentHealth -= col.gameObject.GetComponent<EnemyBase>().m_damage;
-
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.m_takeDamageSound);
+            m_anim.SetBool("TakingDamage", true);
             if (m_currentHealth <= 0)
             {
-                SceneManager.LoadScene("Death Screen");
+                m_anim.SetTrigger("Death");
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.m_deathSound);
             }
         }
     }
@@ -289,6 +354,35 @@ public class Player : MonoBehaviour
             transform.forward = direction;
             transform.Rotate(0, 0, 0);
         }
+    }
+    #endregion
+    #region Animations
+    public void StopTakingDamage()
+    {
+        m_anim.SetBool("TakingDamage", false);
+    }
+
+    public void ToLossScreen()
+    {
+        SceneManager.LoadScene("Death Screen");
+    }
+
+    public void DisableAttack(int attackType)
+    {
+        if (attackType == 1)
+        {
+            m_anim.SetBool("Stab_Attack", false);
+        }
+        else if (attackType == 2)
+        {
+            m_anim.SetBool("AOE_Attack", false);
+        }
+        else if (attackType == 3)
+        {
+            m_anim.SetBool("Bow_Attack", false);
+        }
+
+        Debug.Log("DisableStabAttack");
     }
     #endregion
 }
