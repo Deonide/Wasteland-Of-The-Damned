@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 8784518107771433833}
   - component: {fileID: 7445805371506369620}
   - component: {fileID: 1514973208259446121}
-  - component: {fileID: 8293531726071559834}
   - component: {fileID: 6227583420343711497}
   - component: {fileID: 2108934448333954081}
   - component: {fileID: 3984193785599688828}
+  - component: {fileID: 1051921906571089276}
+  - component: {fileID: 7443106414622566113}
   m_Layer: 9
   m_Name: GraveHowler
   m_TagString: Enemy
@@ -34,7 +35,8 @@ Transform:
   m_LocalPosition: {x: -18.9, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6160206713145032375}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7445805371506369620
@@ -52,7 +54,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2692955673878443282}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -90,27 +92,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8293531726071559834
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2692955673878443282}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6227583420343711497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,10 +104,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3abee460bfec1c44d877904b769ebfea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerPos: {fileID: 0}
+  m_PickUpS:
+  - {fileID: 7323307600018075219, guid: 97bfaaab85aa0ae469dd52634322d546, type: 3}
+  - {fileID: 5908750813570128382, guid: 9be07910e982543479e2f0c03211a5ba, type: 3}
+  - {fileID: 2779269862374938476, guid: e1d2d444d23184d4ebdda0ae9aab4352, type: 3}
   m_agent: {fileID: 0}
+  m_experiencePoints: 2
+  m_wave: 0
   m_damage: 5
   m_health: 5
+  m_playerPos: {fileID: 0}
 --- !u!195 &2108934448333954081
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -176,3 +163,117 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1051921906571089276
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692955673878443282}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.6701562, z: 0.36307323}
+  m_Center: {x: 0, y: 0.9708773, z: 0.04568702}
+--- !u!95 &7443106414622566113
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692955673878443282}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+  m_Controller: {fileID: 9100000, guid: 4d62b78371f70e44f920e62bf3be87cf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Armature'\n\tTransform 'Shoulder.R'\n\tTransform
+    'Foot.R'\n\tTransform 'Upper-Arm.L'\n\tTransform 'Wrist.L'\n\tTransform 'Wrist.R'\n\tTransform
+    'Lower-Leg.R'\n\tTransform 'Lower-Chest'\n\tTransform 'Upper-Leg.L'\n\tTransform
+    'Foot.L'\n\tand more ...\n\tFrom animation clip 'mixamo.com'"
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &5978469283930380636
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8784518107771433833}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8003067058390357497, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5545c89bb0a75004bbe217d139a97e89, type: 2}
+    - target: {fileID: 919132149155446097, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+      propertyPath: m_Name
+      value: Zombies Rig GraveHowler
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+--- !u!4 &6160206713145032375 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 91c2e4f9a1abb0b42b576cdde60c2265, type: 3}
+  m_PrefabInstance: {fileID: 5978469283930380636}
+  m_PrefabAsset: {fileID: 0}

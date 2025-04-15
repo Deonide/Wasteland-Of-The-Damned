@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 7768370736173984444}
   - component: {fileID: 8710686798291317274}
   - component: {fileID: 8387388997351034016}
+  - component: {fileID: 8928983256899289936}
   - component: {fileID: 4086405481091823436}
   - component: {fileID: 4611506997436138429}
-  - component: {fileID: 8928983256899289936}
+  - component: {fileID: 7874421998775656464}
   m_Layer: 9
   m_Name: FleshWeaver
   m_TagString: Enemy
@@ -31,10 +32,11 @@ Transform:
   m_GameObject: {fileID: 1383503561268960152}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.8, y: 0.5, z: 10.99}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5035529657171180524}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7768370736173984444
@@ -52,7 +54,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1383503561268960152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -109,46 +111,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4086405481091823436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383503561268960152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b82c76ccaca31e458e57a71247400f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_playerPos: {fileID: 0}
-  m_agent: {fileID: 0}
-  m_damage: 2
-  m_health: 2
---- !u!195 &4611506997436138429
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383503561268960152}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 5
-  m_ObstacleAvoidanceType: 4
+  m_Size: {x: 0.9071479, y: 1.8320311, z: 1}
+  m_Center: {x: -0.020850182, y: 0.91016823, z: 0}
 --- !u!54 &8928983256899289936
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -176,3 +140,140 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4086405481091823436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383503561268960152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b82c76ccaca31e458e57a71247400f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PickUpS:
+  - {fileID: 7323307600018075219, guid: 97bfaaab85aa0ae469dd52634322d546, type: 3}
+  - {fileID: 5908750813570128382, guid: 9be07910e982543479e2f0c03211a5ba, type: 3}
+  - {fileID: 2779269862374938476, guid: e1d2d444d23184d4ebdda0ae9aab4352, type: 3}
+  m_agent: {fileID: 0}
+  m_experiencePoints: 0
+  m_wave: 0
+  m_damage: 2
+  m_health: 2
+  m_playerPos: {fileID: 0}
+--- !u!195 &4611506997436138429
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383503561268960152}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 5
+  m_ObstacleAvoidanceType: 4
+--- !u!95 &7874421998775656464
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383503561268960152}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+  m_Controller: {fileID: 9100000, guid: 4d62b78371f70e44f920e62bf3be87cf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'Armature'\n\tTransform 'Shoulder.R'\n\tTransform
+    'Foot.R'\n\tTransform 'Upper-Arm.L'\n\tTransform 'Wrist.L'\n\tTransform 'Wrist.R'\n\tTransform
+    'Lower-Leg.R'\n\tTransform 'Lower-Chest'\n\tTransform 'Upper-Leg.L'\n\tTransform
+    'Foot.L'\n\tand more ...\n\tFrom animation clip 'mixamo.com'"
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &4786045431125416967
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1286211751095704416}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: m_Name
+      value: Zombies Rig FleshWeaver
+      objectReference: {fileID: 0}
+    - target: {fileID: 2905683032197522537, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5545c89bb0a75004bbe217d139a97e89, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+--- !u!4 &5035529657171180524 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8f8f72b107931c747aeb3688b8f8d7af, type: 3}
+  m_PrefabInstance: {fileID: 4786045431125416967}
+  m_PrefabAsset: {fileID: 0}
