@@ -22,7 +22,7 @@ TagManager:
   - Obstacle
   - PlayerWeapon
   - Pick Up
-  - 
+  - Props
   - 
   - 
   - 
@@ -30,8 +30,8 @@ TagManager:
   - 
   - SkullRenderLayer
   - HeartRenderLayer
-  - 
-  - 
+  - DiamondRenderLayer
+  - ArrowRenderLayer
   - 
   - 
   - 
