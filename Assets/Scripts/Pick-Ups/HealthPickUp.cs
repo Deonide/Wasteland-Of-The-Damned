@@ -8,6 +8,7 @@ public class HealthPickUp : MonoBehaviour
         {
             Player getPlayerScript = collision.gameObject.GetComponent<Player>();
             getPlayerScript.m_currentHealth += PlayerStatsManager.Instance.m_healAmount;
+            UIManager.Instance.UpdateText();
             Destroy(gameObject);
         }
     }

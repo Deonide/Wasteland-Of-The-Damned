@@ -11,6 +11,7 @@ public class ExpPickUp : MonoBehaviour
             collision.gameObject.GetComponent<Player>();
             Player getPlayerScript = collision.gameObject.GetComponent<Player>();
             getPlayerScript.m_currentExp += m_expGained;
+            UIManager.Instance.UpdateExpBar(m_expGained);
             Destroy(gameObject);
         }
     }

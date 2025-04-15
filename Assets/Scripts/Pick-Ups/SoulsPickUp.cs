@@ -15,6 +15,7 @@ public class SoulsPickUp : MonoBehaviour
         {
             Player getPlayerScript = collision.gameObject.GetComponent<Player>();
             PlayerStatsManager.Instance.Souls += m_soulsToDrop;
+            UIManager.Instance.UpdateText();
             Destroy(gameObject);
         }
     }
