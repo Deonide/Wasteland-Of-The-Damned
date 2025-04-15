@@ -15,7 +15,7 @@ public class PlayerStatsManager : MonoBehaviour
     public int m_AOEDamage;
     public float m_attackTimer;
 
-    //=> is the game as {}
+    //=> is the same as {}
     public bool ArrowUnlocked { 
         get => m_playerStats.m_arrowUnlocked;
         set => m_playerStats.m_arrowUnlocked = value;
@@ -53,17 +53,19 @@ public class PlayerStatsManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+
             m_playerStats = SaveSystem.Deserialize();
             if (m_playerStats == null)
             {
-                m_playerStats = ScriptableObject.CreateInstance<PlayerStats>();
+                m_playerStats = new PlayerStats();
                 Save();
             }
+
             DontDestroyOnLoad(gameObject);
             Application.quitting += OnQuit;
         }
 
-        else
+        else if (!Instance == this && Instance != null)
         {
             Destroy(gameObject);
         } 

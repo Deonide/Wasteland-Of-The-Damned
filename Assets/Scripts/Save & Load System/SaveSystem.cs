@@ -20,6 +20,7 @@ public static class SaveSystem
         Debug.Log("saved game to " + path);
     }
 
+    //Load Game
     public static PlayerStats Deserialize()
     {
         string path = Path.Combine(Application.persistentDataPath, fileName);

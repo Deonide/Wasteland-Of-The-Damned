@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class PlayerStats : ScriptableObject
+
+[System.Serializable]
+public class PlayerStats
 {
     public bool m_arrowUnlocked;
     public bool m_AOEAttackUnlocked;
