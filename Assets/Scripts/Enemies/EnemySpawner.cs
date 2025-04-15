@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] m_enemyPrefabs;
+    private List<EnemyProbability> m_enemyProbabilitys = new List<EnemyProbability>();
 
     [SerializeField]
     private int m_spawningTime;
@@ -31,26 +33,57 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine("Spawn");
     }
 
+    private GameObject ChooseEnemy()
+    {
+        //Calculates the total amount of probabilitys of all enemies
+        var total_probs = 0f;
+        foreach (var prob in m_enemyProbabilitys)
+        {
+            total_probs += prob.m_probability;
+        }
+
+        //Gives a random number from 0 to the total probs variabel
+        var random_num = Random.Range(0, total_probs);
+        var running_sum = 0f;
+        foreach (var prob in m_enemyProbabilitys)
+        {
+            running_sum += prob.m_probability;
+            if (running_sum > random_num)
+            {
+                return prob.m_enemyPrefab;
+            }
+        }
+
+        //returns the enemy in which the number is of probabilitys
+        return m_enemyProbabilitys[0].m_enemyPrefab;
+    }
+
     private IEnumerator Spawn()
     {
         while (!GameManager.Instance.m_bossSpawned)
         {
             for (int i = 0; i < m_amountOfEnemies; i++)
             {
-
+                //Chooses a random position within a sphere around the player
                 m_Randompos = Random.onUnitSphere * m_spawningDistance;
                 m_spawnPos = m_Player.transform.position;
                 m_spawnPos.x += m_Randompos.x;
                 m_spawnPos.z += m_Randompos.z;
+
+                //Checks if there are no colliders on the place where the enemy wants to spawn
+                Collider[] colliderOverlap = Physics.OverlapSphere(m_spawnPos, 2);
+
                 Debug.Log(m_Randompos);
 
-                if (Vector3.Distance(m_Player.transform.position, m_spawnPos) < m_minimumRange)
+                //if the random position is outside the minimum spawning range and there are no colliders on that spot then enemy can proceed to spawn
+                if (Vector3.Distance(m_Player.transform.position, m_spawnPos) < m_minimumRange && colliderOverlap.Length == 0)
                 {
                     continue;
                 }
-                m_enemyToSpawn = Random.Range(0, m_enemyPrefabs.Length);
-                GameObject spawnmedEnemy = Instantiate(m_enemyPrefabs[m_enemyToSpawn], m_spawnPos, Quaternion.identity);
+
+                GameObject spawnmedEnemy = Instantiate(ChooseEnemy(), m_spawnPos, Quaternion.identity);
                 spawnmedEnemy.GetComponent<EnemyBase>().m_playerPos = m_Player;
+                spawnmedEnemy.GetComponent<EnemyBase>().m_wave = m_wave;
                 i++;
                 yield return new WaitForSeconds(m_spawningTime);
             }
@@ -87,8 +120,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 continue;
             }
-            m_enemyToSpawn = Random.Range(0, m_enemyPrefabs.Length);
-            GameObject spawnmedEnemy = Instantiate(m_enemyPrefabs[m_enemyToSpawn], m_spawnPos, Quaternion.identity);
+            GameObject spawnmedEnemy = Instantiate(ChooseEnemy(), m_spawnPos, Quaternion.identity);
             spawnmedEnemy.GetComponent<EnemyBase>().m_playerPos = m_Player;
             i++;
         }
@@ -96,6 +128,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        //Shows the place where enemies can spawn.
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(m_spawnPos, 10);
         Gizmos.color = Color.red;
