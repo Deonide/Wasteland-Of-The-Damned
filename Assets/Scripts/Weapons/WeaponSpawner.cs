@@ -6,14 +6,15 @@ public enum weaponUsed
 {
     Dagger,
     AOE,
-    Arrow
+    Arrow,
 }
 
 public class WeaponSpawner : MonoBehaviour
 {
     [SerializeField]
-    private List<GameObject> m_prefabs = new List<GameObject>();
-    private GameObject m_weaponPrefab;
+    private Animator m_playerAnimator;
+
+    private GameObject m_arrowPrefab;
 
     [SerializeField]
     protected float  m_maxAttackTimer;
@@ -23,7 +24,11 @@ public class WeaponSpawner : MonoBehaviour
     private void Start()
     {
         //At the start of the game, set the attackTimer to the right cooldown.
-        PlayerStatsManager.Instance.m_attackTimer = m_maxAttackTimer;
+        if (PlayerStatsManager.Instance != null)
+        {
+
+            PlayerStatsManager.Instance.m_attackTimer = m_maxAttackTimer;
+        }
         m_player = FindFirstObjectByType<Player>();
         StartCoroutine(Attack());
     }
@@ -31,36 +36,35 @@ public class WeaponSpawner : MonoBehaviour
     protected IEnumerator Attack()
     {
         while (true)
-        {
-            PlayerStatsManager.Instance.m_attackTimer = m_maxAttackTimer;
-
+        { 
             switch (m_player.m_weaponUsed)
             {
                 case weaponUsed.Dagger:
-                    m_weaponPrefab = m_prefabs[0];
+                    m_playerAnimator.SetBool("Stab_Attack", true);
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.m_stabAttackSound);
                     break;
                 case weaponUsed.AOE:
-                    m_weaponPrefab = m_prefabs[1];
+                    m_playerAnimator.SetBool("AOE_Attack", true);
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.m_AoeAttackSound);
                     break;
                 case weaponUsed.Arrow:
-                    m_weaponPrefab = m_prefabs[1];
+                    m_playerAnimator.SetBool("Bow_Attack", true);
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.m_shootArrowSound);
                     break;
             }
 
-            if (m_player.m_weaponUsed == weaponUsed.Dagger)
+            if (PlayerStatsManager.Instance != null)
             {
-                GameObject spawnedWeapon = Instantiate(m_weaponPrefab, transform.position, Quaternion.Euler(90, m_player.transform.rotation.eulerAngles.y /*- 90*/, 0));
-            }
-            else if (m_player.m_weaponUsed == weaponUsed.AOE)
-            {
-
+                PlayerStatsManager.Instance.m_attackTimer = m_maxAttackTimer;
+                yield return new WaitForSeconds(PlayerStatsManager.Instance.m_attackTimer);
             }
             else
             {
-                GameObject spawnedWeapon = Instantiate(m_weaponPrefab, transform.position, Quaternion.Euler(0, m_player.transform.rotation.eulerAngles.y, 0));
+                yield return new WaitForSeconds(2f);
             }
 
-            yield return new WaitForSeconds(PlayerStatsManager.Instance.m_attackTimer);
         }
     }
+
+
 }

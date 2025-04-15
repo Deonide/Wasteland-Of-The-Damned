@@ -11,8 +11,20 @@ public class Arrow : WeaponBase
         m_rb = GetComponent<Rigidbody>();
     }
 
-    protected void Update()
+    protected void FixedUpdate()
     {
+        //Goes after every frame
         m_rb.AddForce(transform.forward * 10);
     }
+
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        m_pierce--;
+        if (m_pierce <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
 }

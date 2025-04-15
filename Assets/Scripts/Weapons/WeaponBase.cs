@@ -8,14 +8,4 @@ public class WeaponBase : MonoBehaviour
      
     [SerializeField]
     protected int m_pierce = 1;
-
-    protected virtual void OnCollisionEnter(Collision collision)
-    {
-        m_pierce--;
-
-        if (m_pierce <= 0)
-        {
-            Destroy(gameObject);
-        }
-    }
 }

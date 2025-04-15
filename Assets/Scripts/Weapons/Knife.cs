@@ -5,6 +5,5 @@ public class Knife : WeaponBase
     protected virtual void Start()
     {
         m_damage = PlayerStatsManager.Instance.m_swordDamage;
-        Destroy(gameObject, .2f);
     }
 }
