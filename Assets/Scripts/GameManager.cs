@@ -8,6 +8,7 @@ public class GameManager : SingletonBase<GameManager>
 
     public bool m_bossSpawned;
     public float m_timeAlive;
+    public float m_bossTimer;
 
     public override void Awake()
     {
@@ -30,6 +31,8 @@ public class GameManager : SingletonBase<GameManager>
     private void Update()
     {
         m_timeAlive += Time.deltaTime;
+        m_bossTimer += Time.deltaTime;
+
         UIManager.Instance.m_timeSurvived.text = m_timeAlive.ToString("F2");
     }
 

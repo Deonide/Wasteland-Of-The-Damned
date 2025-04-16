@@ -6,14 +6,14 @@ public class Arrow : WeaponBase
 
     protected void Start()
     {
-        m_damage = PlayerStatsManager.Instance.m_arrowDamage;
-        m_pierce = PlayerStatsManager.Instance.m_arrowPierce;
+/*        m_damage = PlayerStatsManager.Instance.m_arrowDamage;
+        m_pierce = PlayerStatsManager.Instance.m_arrowPierce;*/
         m_rb = GetComponent<Rigidbody>();
     }
 
     protected void FixedUpdate()
     {
-        //Goes after every frame
+        //Speed increases after every frame
         m_rb.AddForce(transform.forward * 10);
     }
 

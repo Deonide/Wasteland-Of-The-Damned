@@ -14,8 +14,6 @@ public class WeaponSpawner : MonoBehaviour
     [SerializeField]
     private Animator m_playerAnimator;
 
-    private GameObject m_arrowPrefab;
-
     [SerializeField]
     protected float  m_maxAttackTimer;
 
@@ -49,7 +47,7 @@ public class WeaponSpawner : MonoBehaviour
                     break;
                 case weaponUsed.Arrow:
                     m_playerAnimator.SetBool("Bow_Attack", true);
-                    AudioManager.Instance.PlaySFX(AudioManager.Instance.m_shootArrowSound);
+
                     break;
             }
 

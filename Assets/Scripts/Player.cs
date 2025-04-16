@@ -81,6 +81,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject[] m_usedWeapon;
 
+    [SerializeField]
+    private GameObject m_arrowPrefab, m_weaponSpawner;
+
     #endregion
 
     void Start()
@@ -323,6 +326,12 @@ public class Player : MonoBehaviour
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.m_deathSound);
             }
         }
+    }
+
+    public void ShootArrow()
+    {
+        Instantiate(m_arrowPrefab, m_weaponSpawner.transform.position, Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0));
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.m_shootArrowSound);
     }
 
     #region Aim On Screen

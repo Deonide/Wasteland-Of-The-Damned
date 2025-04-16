@@ -11,6 +11,7 @@ public class BoneFollower : MonoBehaviour
 
     void Update()
     {
+        
         //To make sure that the weapon is at the right place
         gameObject.transform.position = m_positionOffset + m_target.position;
         gameObject.transform.rotation = Quaternion.Euler(m_rotationOffset + m_target.rotation.eulerAngles);

@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField]
-    private List<EnemyProbability> m_enemyProbabilitys = new List<EnemyProbability>();
-
+    public List<EnemyProbability> m_enemyProbabilitys = new List<EnemyProbability>();
+    
     [SerializeField]
     private int m_spawningTime;
 
@@ -19,6 +18,8 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField]
     private Player m_Player;
+
+    private GameObject m_carrionKing;
 
     private int m_minMax = 5;
     private int m_enemyToSpawn;
@@ -60,48 +61,57 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator Spawn()
     {
-        while (!GameManager.Instance.m_bossSpawned)
+        if (GameManager.Instance.m_bossTimer >= 300)
         {
-            for (int i = 0; i < m_amountOfEnemies; i++)
+
+            GameManager.Instance.m_bossSpawned = true;
+            GameManager.Instance.m_bossTimer = 0;
+        }
+        else
+        {
+            while (!GameManager.Instance.m_bossSpawned)
             {
-                //Chooses a random position within a sphere around the player
-                m_Randompos = Random.onUnitSphere * m_spawningDistance;
-                m_spawnPos = m_Player.transform.position;
-                m_spawnPos.x += m_Randompos.x;
-                m_spawnPos.z += m_Randompos.z;
-
-                //Checks if there are no colliders on the place where the enemy wants to spawn
-                Collider[] colliderOverlap = Physics.OverlapSphere(m_spawnPos, 2);
-
-                Debug.Log(m_Randompos);
-
-                //if the random position is outside the minimum spawning range and there are no colliders on that spot then enemy can proceed to spawn
-                if (Vector3.Distance(m_Player.transform.position, m_spawnPos) < m_minimumRange && colliderOverlap.Length == 0)
+                for (int i = 0; i < m_amountOfEnemies; i++)
                 {
-                    continue;
+                    //Chooses a random position within a sphere around the player
+                    m_Randompos = Random.onUnitSphere * m_spawningDistance;
+                    m_spawnPos = m_Player.transform.position;
+                    m_spawnPos.x += m_Randompos.x;
+                    m_spawnPos.z += m_Randompos.z;
+
+                    //Checks if there are no colliders on the place where the enemy wants to spawn
+                    Collider[] colliderOverlap = Physics.OverlapSphere(m_spawnPos, 2);
+
+                    Debug.Log(m_Randompos);
+
+                    //if the random position is outside the minimum spawning range and there are no colliders on that spot then enemy can proceed to spawn
+                    if (Vector3.Distance(m_Player.transform.position, m_spawnPos) < m_minimumRange && colliderOverlap.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    GameObject spawnmedEnemy = Instantiate(ChooseEnemy(), m_spawnPos, Quaternion.identity);
+                    spawnmedEnemy.GetComponent<EnemyBase>().m_playerPos = m_Player;
+                    spawnmedEnemy.GetComponent<EnemyBase>().m_wave = m_wave;
+                    i++;
+                    yield return new WaitForSeconds(m_spawningTime);
                 }
 
-                GameObject spawnmedEnemy = Instantiate(ChooseEnemy(), m_spawnPos, Quaternion.identity);
-                spawnmedEnemy.GetComponent<EnemyBase>().m_playerPos = m_Player;
-                spawnmedEnemy.GetComponent<EnemyBase>().m_wave = m_wave;
-                i++;
+
+                m_amountOfEnemies = Mathf.RoundToInt(m_wave * 0.5f);
+                if (m_amountOfEnemies < 1)
+                {
+                    m_amountOfEnemies = 1;
+                }
+
+                m_groups++;
+                if (m_groups > 10)
+                {
+                    m_wave++;
+                    m_groups = 0;
+                }
                 yield return new WaitForSeconds(m_spawningTime);
             }
-
-
-            m_amountOfEnemies = Mathf.RoundToInt(m_wave * 0.5f);
-            if (m_amountOfEnemies < 1)
-            {
-                m_amountOfEnemies = 1;
-            }
-
-            m_groups++;
-            if (m_groups > 10)
-            {
-                m_wave++;
-                m_groups = 0;
-            }
-            yield return new WaitForSeconds(m_spawningTime);
         }
     }
 
@@ -114,16 +124,22 @@ public class EnemySpawner : MonoBehaviour
             m_spawnPos = m_Player.transform.position;
             m_spawnPos.x += m_Randompos.x;
             m_spawnPos.z += m_Randompos.z;
-            Debug.Log(m_Randompos);
-
-            if (Vector3.Distance(m_Player.transform.position, m_spawnPos) < m_minimumRange)
-            {
-                continue;
-            }
             GameObject spawnmedEnemy = Instantiate(ChooseEnemy(), m_spawnPos, Quaternion.identity);
             spawnmedEnemy.GetComponent<EnemyBase>().m_playerPos = m_Player;
             i++;
         }
+    }
+
+    public void SpawnBoss()
+    {
+        m_Randompos = Random.onUnitSphere * m_spawningDistance;
+        m_spawnPos = m_Player.transform.position;
+        m_spawnPos.x += m_Randompos.x;
+        m_spawnPos.z += m_Randompos.z;
+
+        GameObject spawnedBoss = Instantiate(m_carrionKing, m_spawnPos, Quaternion.identity);
+        spawnedBoss.GetComponent<EnemyBase>().m_playerPos = m_Player;
+        spawnedBoss.GetComponent<CarrionKing>().m_enemySpawner = this;
     }
 
     private void OnDrawGizmosSelected()

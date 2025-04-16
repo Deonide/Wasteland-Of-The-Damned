@@ -7,6 +7,10 @@ TagManager:
   - Enemy
   - Weapon
   - Obstacle
+  - City
+  - WasteZone
+  - Graveyard
+  - HauntedForest
   layers:
   - Default
   - TransparentFX
